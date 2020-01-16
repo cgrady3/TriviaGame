@@ -5,6 +5,7 @@
     // use setTimer method
 // if correct answer is chosen, show congrats screen and ++ answers correct
     // hide all other divs and show congrats screen after a set time
+    // use fadein and fadeout methods
 // if wrong answer chosen or time runs out, show correct answer, and ++ answers wrong
     // same div shown whether wrong answer or timer runs out
     // click function for wrong answer array index's
