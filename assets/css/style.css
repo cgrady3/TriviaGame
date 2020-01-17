@@ -1,8 +1,14 @@
 body{
-    background: url(/assets/images/tardis-background.jpg);
+    background-image: url(../images/tardis-background.jpg);
     font-family: 'Oswald', sans-serif;
+    color: bisque;
 }
 
 h1{
     font-family: 'Special Elite', cursive;
+    margin: 10px 0px 10px 38%;
+}
+
+#question-card{
+    height: 800px;
 }
