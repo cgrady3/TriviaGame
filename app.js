@@ -29,10 +29,18 @@ let answer = [
     $(document).ready(function () {
         for (i = 0; i < questions.length; i++) {
             createCard(i);
-    
-    
+            startTimer();
+            if (timer === 0 || this != answer[i]){
+                wrong();
+                numWrong++;
+            }
+            else if (this === answer[i]){
+                correct();
+                numCorrect++;
+            }
+            resetTimer();
         }
-    
+        displayResults();    
     })
 
     function createCard(i) {
