@@ -1,6 +1,6 @@
 var numCorrect = 0;
 var numWrong = 0;
-var timer;
+var countdown = 20;
 
 let questions = [
     'What two-word phrase occurs repeatedly throughout the episodes of Series 1 (2005) and is the title of the penultimate episode?',
@@ -42,8 +42,20 @@ function createCard(i) {
 }
 
 function startTimer() {
+    $('#timer').html(<div>`${countdown}`</div>)
+    if (countdown >= 0) {
+        setInterval(timer, 1000);
+        $('#timer').html(<div>`${countdown}`</div>)
+    }
+    else {
+        wrong();
+        countdown = 20;
+    }
+}
 
-
+function timer() {
+    countdown--;
+    
 }
 
 function wrong() {
@@ -76,13 +88,13 @@ function displayResults() {
     if (percent >= .9) {
         let grade = $('<div id="grade">').text('Great job! Wait... Are you the Doctor?');
     }
-    else  if (percent >= .8 ) {
+    else if (percent >= .8) {
         let grade = $('<div id="grade">').text('Definetely companion material');
     }
-    else  if (percent >= .7 ) {
+    else if (percent >= .7) {
         let grade = $('<div id="grade">').text('You almost had it! Better luck next time');
     }
-    else  if (percent >= .6 ) {
+    else if (percent >= .6) {
         let grade = $('<div id="grade">').text('Not much of a Whovian I see');
     }
     else {
@@ -101,11 +113,12 @@ $(document).ready(function () {
     for (i = 0; i < questions.length; i++) {
         createCard(i);
         startTimer();
-        if (timer === 0 || this != answer[i]) {
+        let guess = $(this).data(choice)
+        if (timer === 0 || guess != answer[i]) {
             wrong();
             numWrong++;
         }
-        else if (this === answer[i]) {
+        else if (guess === answer[i]) {
             correct();
             numCorrect++;
         }
