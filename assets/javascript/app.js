@@ -39,23 +39,25 @@ function createCard(i) {
     let card = main.append(head).append(A).append(B).append(C).append(D);
 
     $('#question-card').append(card);
+    
+    startTimer();
 }
 
 function startTimer() {
-    $('#timer').html(<div>`${countdown}`</div>)
+    $('#timer').text(`${countdown}`)
     if (countdown >= 0) {
         setInterval(timer, 1000);
-        $('#timer').html(<div>`${countdown}`</div>)
-    }
-    else {
-        wrong();
-        countdown = 20;
+        $('#timer').text(`${countdown}`)
     }
 }
 
 function timer() {
     countdown--;
-    
+}
+
+function resetTimer() {
+    countdown = 20;
+    $('#timer').text(`${countdown}`)
 }
 
 function wrong() {
@@ -70,10 +72,6 @@ function correct() {
     // add happy gif
 }
 
-function resetTimer() {
-
-}
-
 function displayResults() {
     $('#question-card').hide();
     $('#correct').hide();
@@ -84,21 +82,22 @@ function displayResults() {
 
     let correct = $('<div id="correct">').text(`You answered ${numCorrect} questions right`);
     let wrong = $('<div id="wrong">').text(`You answered ${numWrong} questions wrong`);
+    let grade = $('<div id="grade">')
     let percent = numCorrect / questions.length;
     if (percent >= .9) {
-        let grade = $('<div id="grade">').text('Great job! Wait... Are you the Doctor?');
+        $('<div id="grade">').text('Great job! Wait... Are you the Doctor?');
     }
     else if (percent >= .8) {
-        let grade = $('<div id="grade">').text('Definetely companion material');
+        $('<div id="grade">').text('Definetely companion material');
     }
     else if (percent >= .7) {
-        let grade = $('<div id="grade">').text('You almost had it! Better luck next time');
+        $('<div id="grade">').text('You almost had it! Better luck next time');
     }
     else if (percent >= .6) {
-        let grade = $('<div id="grade">').text('Not much of a Whovian I see');
+        $('<div id="grade">').text('Not much of a Whovian I see');
     }
     else {
-        let grade = $('<div id="grade">').text('...ouch');
+        $('<div id="grade">').text('...ouch');
     }
 
     $('#final-page').append(correct).append(wrong).append(grade);
@@ -112,9 +111,9 @@ $(document).ready(function () {
 
     for (i = 0; i < questions.length; i++) {
         createCard(i);
-        startTimer();
-        let guess = $(this).data(choice)
-        if (timer === 0 || guess != answer[i]) {
+        let guess = $(this).data('choice')
+        
+        if (countdown === 0 || guess !== answer[i]) {
             wrong();
             numWrong++;
         }
