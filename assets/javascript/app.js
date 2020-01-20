@@ -4,7 +4,7 @@ $(document).ready(function () {
     var numWrong = 0;
     var countdown = 20;
     var index = 0;
-    var questionCard = $('#question-card')
+    var questionCard = $('#question')
 
     let questions = [
         'What two-word phrase occurs repeatedly throughout the episodes of Series 1 (2005) and is the title of the penultimate episode?',
@@ -43,7 +43,9 @@ $(document).ready(function () {
     }
 
     function startGame() {
-        $('question-card').empty();
+        $('#question').empty();
+        $('#answer-choices').empty();
+
         displayQuestion();
     }
 
@@ -82,19 +84,21 @@ $(document).ready(function () {
                 correct();
                 numCorrect++;
             }
-        })
 
-        nextQuestion();
+            nextQuestion();
+        })       
     }
 
     function wrong() {
-        $('#question-card').hide();
+        $('#question').hide();
+        $('#answer-choices').empty();
         $('#wrong').show();
         // add disapoint gif
     }
 
     function correct() {
-        $('#question-card').hide();
+        $('#question').hide();
+        $('#answer-choices').empty();
         $('#correct').show();
         // add happy gif
     }
@@ -111,31 +115,32 @@ $(document).ready(function () {
 
 
     function displayResults() {
-        $('#question-card').hide();
+        /*$('#question').hide();
+        $('#answer-choices').empty();
         $('#correct').hide();
         $('#wrong').hide();
         $('#timer').hide();
         $('#final-page').hide();
-        $('#reset').show();
+        $('#reset').show();*/
 
         let correct = $('<div id="correct">').text(`You answered ${numCorrect} questions right`);
         let wrong = $('<div id="wrong">').text(`You answered ${numWrong} questions wrong`);
         let grade = $('<div id="grade">')
         let percent = numCorrect / questions.length;
         if (percent >= .9) {
-            $('<div id="grade">').text('Great job! Wait... Are you the Doctor?');
+            grade.text('Great job! Wait... Are you the Doctor?');
         }
         else if (percent >= .8) {
-            $('<div id="grade">').text('Definetely companion material');
+            grade.text('Definetely companion material');
         }
         else if (percent >= .7) {
-            $('<div id="grade">').text('You almost had it! Better luck next time');
+            grade.text('You almost had it! Better luck next time');
         }
         else if (percent >= .6) {
-            $('<div id="grade">').text('Not much of a Whovian I see');
+            grade.text('Not much of a Whovian I see');
         }
         else {
-            $('<div id="grade">').text('...ouch');
+            grade.text('...ouch');
         }
 
         $('#final-page').append(correct).append(wrong).append(grade);
