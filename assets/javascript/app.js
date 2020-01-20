@@ -29,20 +29,17 @@ $(document).ready(function () {
         'The Master',
         'Time And Relative Dimensions In Space']
 
-    function createCard(i) {
+    function createCard() {
 
         // create card elements
-        var main = $('<div id="card">');
-        var head = $('<div id="question">').text(questions[i]);
-        var A = $('<button id="answer-choices" data-choice="A">').text(answerChoices[0]);
-        var B = $('<button id="answer-choices" data-choice="B">').text(answerChoices[1]);
-        var C = $('<button id="answer-choices" data-choice="C">').text(answerChoices[2]);
-        var D = $('<button id="answer-choices" data-choice="D">').text(answerChoices[3]);
+        var question = $('<div id="question">').text(questions[index]);
+        var A = $('<button id="answer-choices" data-choice="A">').text(answerChoices[index][0]);
+        var B = $('<button id="answer-choices" data-choice="B">').text(answerChoices[index][1]);
+        var C = $('<button id="answer-choices" data-choice="C">').text(answerChoices[index][2]);
+        var D = $('<button id="answer-choices" data-choice="D">').text(answerChoices[index][3]);
 
-        // append card elements to create the question card
-        let card = main.append(head).append(A).append(B).append(C).append(D);
-
-        $('#question-card').append(card);
+        $('#question').append(question);
+        $('#answer-choices').append(A).append(B).append(C).append(D);
     }
 
     function startGame() {
@@ -51,7 +48,7 @@ $(document).ready(function () {
     }
 
     function displayQuestion() {
-        questionCard.html(questions[index])
+        createCard();
         startTimer();
         questionTime();
     }
@@ -143,6 +140,8 @@ $(document).ready(function () {
 
         $('#final-page').append(correct).append(wrong).append(grade);
     }
+    
+    startGame();
 })
 
 
