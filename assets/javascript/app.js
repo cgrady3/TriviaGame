@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var numCorrect = 0;
     var numWrong = 0;
-    var countdown = 20;
+    var time = 20;
     var index = 0;
     var questionCard = $('#question')
 
@@ -32,8 +32,11 @@ $(document).ready(function () {
 
     function startGame() {
         cleanSlate();
-        displayQuestion();
+        $('#start').click(function () {
+            displayQuestion();
+        })
     }
+
 
     function cleanSlate() {
         console.log('cleanSlate')
@@ -47,6 +50,15 @@ $(document).ready(function () {
     }
 
     function displayQuestion() {
+        var countdown = setInterval(function () {
+            time--;
+            $('#timer').html("<h2>" + time + " seconds remaining</h2>")
+            if (time === 0) {
+                wrong();
+                numWrong++;
+            }
+        }, 1000);
+        $('#start').hide();
         console.log('displayQuestion')
         createCard();
         answerIntake();
@@ -74,7 +86,7 @@ $(document).ready(function () {
             console.log('guess:' + guess)
             console.log('answer:' + answer[index])
 
-            if (countdown === 0 || guess !== answer[index]) {
+            if (guess !== answer[index]) {
                 wrong();
                 numWrong++;
                 console.log('numWrong:' + numWrong)
@@ -84,12 +96,15 @@ $(document).ready(function () {
                 numCorrect++;
                 console.log('numCorrect:' + numCorrect)
             }
+            clearInterval(countdown);
         })
     }
 
     function nextQuestion() {
         $('#wrong').hide();
         $('#correct').hide();
+       // $('#timer').show();
+
         index++;
         if (index === questions.length) {
             displayResults();
@@ -102,15 +117,19 @@ $(document).ready(function () {
     function wrong() {
         $('#question').empty();
         $('.answer-choices').empty();
+        $('#timer').empty();
         $('#wrong').show();
-        setTimeout(nextQuestion, 4000);
+        time = 20;
+        setTimeout(nextQuestion, 3000);
     }
 
     function correct() {
         $('#question').empty();
         $('.answer-choices').empty();
+        $('#timer').empty();
         $('#correct').show();
-        setTimeout(nextQuestion, 4000);
+        time = 20;
+        setTimeout(nextQuestion, 3000);
     }
 
     function displayResults() {
@@ -118,12 +137,11 @@ $(document).ready(function () {
         $('.answer-choices').empty();
         $('#correct').hide();
         $('#wrong').hide();
-        $('#timer').hide();
+        $('#timer').empty();
         $('#final-page').show();
         $('#reset').show();
 
-        let correct = $('<div id="correct">').text(`You answered ${numCorrect} questions right`);
-        let wrong = $('<div id="wrong">').text(`You answered ${numWrong} questions wrong`);
+        let results = $('<div id="correct">').text(`You answered ${numCorrect} questions right and ${numWrong} question wrong`);
         let grade = $('<div id="grade">')
         let percent = numCorrect / questions.length;
         if (percent >= .9) {
@@ -142,7 +160,7 @@ $(document).ready(function () {
             grade.text('...ouch');
         }
 
-        $('#final-page').append(correct).append(wrong).append(grade);
+        $('#final-page').append(correct).append(results);
     }
 
     startGame()
