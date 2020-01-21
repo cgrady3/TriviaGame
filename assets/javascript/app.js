@@ -2,8 +2,9 @@ $(document).ready(function () {
 
     var numCorrect = 0;
     var numWrong = 0;
-    var time = 20;
+    var time;
     var index = 0;
+    var countdown;
     var questionCard = $('#question')
 
     let questions = [
@@ -49,15 +50,18 @@ $(document).ready(function () {
         $('#reset').hide()
     }
 
-    function displayQuestion() {
-        var countdown = setInterval(function () {
+    function timer(){
             time--;
             $('#timer').html("<h2>" + time + " seconds remaining</h2>")
             if (time === 0) {
                 wrong();
                 numWrong++;
             }
-        }, 1000);
+    }
+
+    function displayQuestion() {
+        time = 20;
+        countdown = setInterval(timer, 1000);
         $('#start').hide();
         console.log('displayQuestion')
         createCard();
@@ -103,7 +107,6 @@ $(document).ready(function () {
     function nextQuestion() {
         $('#wrong').hide();
         $('#correct').hide();
-       // $('#timer').show();
 
         index++;
         if (index === questions.length) {
