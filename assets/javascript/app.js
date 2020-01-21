@@ -38,7 +38,6 @@ $(document).ready(function () {
         })
     }
 
-
     function cleanSlate() {
         console.log('cleanSlate')
         $('#question').empty()
@@ -50,13 +49,13 @@ $(document).ready(function () {
         $('#reset').hide()
     }
 
-    function timer(){
-            time--;
-            $('#timer').html("<h2>" + time + " seconds remaining</h2>")
-            if (time === 0) {
-                wrong();
-                numWrong++;
-            }
+    function timer() {
+        time--;
+        $('#timer').html("<h2>" + time + " seconds remaining</h2>")
+        if (time === 0) {
+            wrong();
+            numWrong++;
+        }
     }
 
     function displayQuestion() {
@@ -65,7 +64,7 @@ $(document).ready(function () {
         $('#start').hide();
         console.log('displayQuestion')
         createCard();
-        answerIntake();
+
     }
 
     function createCard() {
@@ -73,10 +72,10 @@ $(document).ready(function () {
         console.log('createCard')
         // create card elements
         var question = $('<div id="question">').text(questions[index]);
-        var A = $('<button class="answer-choices" data-choice="A">').text(answerChoices[index][0]);
-        var B = $('<button class="answer-choices" data-choice="B">').text(answerChoices[index][1]);
-        var C = $('<button class="answer-choices" data-choice="C">').text(answerChoices[index][2]);
-        var D = $('<button class="answer-choices" data-choice="D">').text(answerChoices[index][3]);
+        var A = $('<button class="answer-choice" value="A">').text(answerChoices[index][0]);
+        var B = $('<button class="answer-choice" value="B">').text(answerChoices[index][1]);
+        var C = $('<button class="answer-choice" value="C">').text(answerChoices[index][2]);
+        var D = $('<button class="answer-choice" value="D">').text(answerChoices[index][3]);
 
         $('#question').append(question);
         $('.answer-choices').append(A).append(B).append(C).append(D);
@@ -85,23 +84,7 @@ $(document).ready(function () {
     function answerIntake() {
         console.log('answerIntake')
 
-        $('.answer-choices').click(function () {
-            let guess = $(this).data('choice')
-            console.log('guess:' + guess)
-            console.log('answer:' + answer[index])
 
-            if (guess !== answer[index]) {
-                wrong();
-                numWrong++;
-                console.log('numWrong:' + numWrong)
-            }
-            else if (guess === answer[index]) {
-                correct();
-                numCorrect++;
-                console.log('numCorrect:' + numCorrect)
-            }
-            clearInterval(countdown);
-        })
     }
 
     function nextQuestion() {
@@ -123,6 +106,7 @@ $(document).ready(function () {
         $('#timer').empty();
         $('#wrong').show();
         time = 20;
+        clearInterval(countdown);
         setTimeout(nextQuestion, 3000);
     }
 
@@ -132,6 +116,7 @@ $(document).ready(function () {
         $('#timer').empty();
         $('#correct').show();
         time = 20;
+        clearInterval(countdown);
         setTimeout(nextQuestion, 3000);
     }
 
@@ -167,4 +152,23 @@ $(document).ready(function () {
     }
 
     startGame()
+    $('.answer-choices').on('click', function (evt) {
+console.log('evt:',evt.target)
+        let guess = evt.target.value
+        console.log('guess:' + guess)
+        console.log('answer:' + answer[index])
+
+        if (guess !== answer[index]) {
+            wrong();
+            numWrong++;
+            console.log('numWrong:' + numWrong)
+        }
+        else if (guess === answer[index]) {
+            correct();
+            numCorrect++;
+            console.log('numCorrect:' + numCorrect)
+        }
+        
+    })
+
 })
