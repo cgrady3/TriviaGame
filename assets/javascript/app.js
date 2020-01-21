@@ -30,12 +30,12 @@ $(document).ready(function () {
         'B'
     ]
 
-    function startGame(){
+    function startGame() {
         cleanSlate();
         displayQuestion();
     }
 
-    function cleanSlate(){
+    function cleanSlate() {
         console.log('cleanSlate')
         $('#question').empty()
         $('#answer-choices').empty()
@@ -46,14 +46,14 @@ $(document).ready(function () {
         $('#reset').hide()
     }
 
-    function displayQuestion(){
+    function displayQuestion() {
         console.log('displayQuestion')
         createCard();
         answerIntake();
     }
 
     function createCard() {
-        console.log(index)
+        console.log('index:' + index)
         console.log('createCard')
         // create card elements
         var question = $('<div id="question">').text(questions[index]);
@@ -66,28 +66,84 @@ $(document).ready(function () {
         $('.answer-choices').append(A).append(B).append(C).append(D);
     }
 
-    function answerIntake(){
+    function answerIntake() {
         console.log('answerIntake')
-        
+
         $('.answer-choices').click(function () {
             let guess = $(this).data('choice')
-            console.log(guess)
-            console.log(answer[index])
-        
+            console.log('guess:' + guess)
+            console.log('answer:' + answer[index])
+
             if (countdown === 0 || guess !== answer[index]) {
-               // wrong();
+                wrong();
                 numWrong++;
-                console.log(numWrong)
+                console.log('numWrong:' + numWrong)
             }
             else if (guess === answer[index]) {
-                //correct();
+                correct();
                 numCorrect++;
-                console.log(numCorrect)
+                console.log('numCorrect:' + numCorrect)
             }
-
-            //nextQuestion();
         })
     }
 
+    function nextQuestion() {
+        $('#wrong').hide();
+        $('#correct').hide();
+        index++;
+        if (index === questions.length) {
+            displayResults();
+        }
+        else {
+            displayQuestion();
+        }
+    }
+
+    function wrong() {
+        $('#question').empty();
+        $('.answer-choices').empty();
+        $('#wrong').show();
+        setTimeout(nextQuestion, 4000);
+    }
+
+    function correct() {
+        $('#question').empty();
+        $('.answer-choices').empty();
+        $('#correct').show();
+        setTimeout(nextQuestion, 4000);
+    }
+
+    function displayResults() {
+        $('#question').empty();
+        $('.answer-choices').empty();
+        $('#correct').hide();
+        $('#wrong').hide();
+        $('#timer').hide();
+        $('#final-page').show();
+        $('#reset').show();
+
+        let correct = $('<div id="correct">').text(`You answered ${numCorrect} questions right`);
+        let wrong = $('<div id="wrong">').text(`You answered ${numWrong} questions wrong`);
+        let grade = $('<div id="grade">')
+        let percent = numCorrect / questions.length;
+        if (percent >= .9) {
+            grade.text('Great job! Wait... Are you the Doctor?');
+        }
+        else if (percent >= .8) {
+            grade.text('Definetely companion material');
+        }
+        else if (percent >= .7) {
+            grade.text('You almost had it! Better luck next time');
+        }
+        else if (percent >= .6) {
+            grade.text('Not much of a Whovian I see');
+        }
+        else {
+            grade.text('...ouch');
+        }
+
+        $('#final-page').append(correct).append(wrong).append(grade);
+    }
+
     startGame()
-    })
+})
