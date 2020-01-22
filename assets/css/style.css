@@ -10,13 +10,13 @@ body {
 
 h1 {
     font-family: 'Special Elite', cursive;
-    font-size: 50px;
-    margin: 30px auto;
-    
+    font-size: 80px;
+    margin: 30px auto 0px auto;   
 }
 
 #question{
-    margin: 20px;
+    margin: 40px;
+    font-size: 32px;
 }
 
 .main{
@@ -33,6 +33,11 @@ button {
     font-weight: bold;
     display: block;
     margin: 5px;
+    border-radius: 20px;
+}
+
+button:hover{
+    background-color: #91a6eb;
 }
 
 #start{
@@ -41,6 +46,14 @@ button {
     margin: 0 auto;
 }
 
-.giphy-embed{
-    margin: 0 auto;
+#timer{
+    height: 20px;
+    color: #9c0b0b;
+    font-weight: bolder;
+    font-size: 60px;
 }
+
+.end{
+    font-size: 38px;
+}
+

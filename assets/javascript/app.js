@@ -51,7 +51,7 @@ $(document).ready(function () {
 
     function timer() {
         time--;
-        $('#timer').html("<h2>" + time + " seconds remaining</h2>")
+        $('#timer').html("<h2>" + time + "</h2>")
         if (time === 0) {
             wrong();
             numWrong++;
@@ -81,12 +81,6 @@ $(document).ready(function () {
         $('.answer-choices').append(A).append(B).append(C).append(D);
     }
 
-    function answerIntake() {
-        console.log('answerIntake')
-
-
-    }
-
     function nextQuestion() {
         $('#wrong').hide();
         $('#correct').hide();
@@ -107,7 +101,7 @@ $(document).ready(function () {
         $('#wrong').show();
         time = 20;
         clearInterval(countdown);
-        setTimeout(nextQuestion, 3000);
+        setTimeout(nextQuestion, 2700);
     }
 
     function correct() {
@@ -117,7 +111,7 @@ $(document).ready(function () {
         $('#correct').show();
         time = 20;
         clearInterval(countdown);
-        setTimeout(nextQuestion, 3000);
+        setTimeout(nextQuestion, 2700);
     }
 
     function displayResults() {
@@ -129,7 +123,7 @@ $(document).ready(function () {
         $('#final-page').show();
         $('#reset').show();
 
-        let results = $('<div id="correct">').text(`You answered ${numCorrect} questions right and ${numWrong} question wrong`);
+        let results = $('<div id="correct">').text(`You answered ${numCorrect} questions right out of ${numWrong+numCorrect}`);
         let grade = $('<div id="grade">')
         let percent = numCorrect / questions.length;
         if (percent >= .9) {
