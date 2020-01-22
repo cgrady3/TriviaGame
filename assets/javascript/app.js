@@ -123,20 +123,20 @@ $(document).ready(function () {
         $('#final-page').show();
         $('#reset').show();
 
-        let results = $('<div id="correct">').text(`You answered ${numCorrect} questions right out of ${numWrong+numCorrect}`);
+        let results = $('<div id="correct">').text(`You answered ${numCorrect} right out of ${numWrong+numCorrect}`);
         let grade = $('<div id="grade">')
         let percent = numCorrect / questions.length;
         if (percent >= .9) {
             grade.text('Great job! Wait... Are you the Doctor?');
         }
         else if (percent >= .8) {
-            grade.text('Definetely companion material');
+            grade.text('You\'re definetely companion material!');
         }
         else if (percent >= .7) {
             grade.text('You almost had it! Better luck next time');
         }
         else if (percent >= .6) {
-            grade.text('Not much of a Whovian I see');
+            grade.text('Not much of a Whovian, I see...');
         }
         else {
             grade.text('...ouch');
