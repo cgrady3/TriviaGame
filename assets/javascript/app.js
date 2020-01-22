@@ -148,12 +148,12 @@ $(document).ready(function () {
             grade.text('...ouch');
         }
 
-        $('#final-page').append(correct).append(results);
+        $('#final-page').append(results).append(grade);
     }
 
     startGame()
     $('.answer-choices').on('click', function (evt) {
-console.log('evt:',evt.target)
+        console.log('evt:', evt.target)
         let guess = evt.target.value
         console.log('guess:' + guess)
         console.log('answer:' + answer[index])
@@ -168,7 +168,5 @@ console.log('evt:',evt.target)
             numCorrect++;
             console.log('numCorrect:' + numCorrect)
         }
-        
     })
-
 })
